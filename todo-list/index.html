@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- For Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <title>Todo List</title>
+    <style>
+      h1 {
+        /* background-color: aquamarine; */
+        border-bottom: 10px double black;
+        width: 40%;
+        margin: auto;
+        text-align: center;
+        margin-top: 30px;
+      }
+      #container {
+        background-color: lightgrey;
+        border: 5px solid lightseagreen;
+        /* border-radius: 30px; */
+        border-top-left-radius: 80px;
+        border-bottom-right-radius: 80px;
+        width: 60%;
+        padding: 30px;
+        padding-left: 50px;
+        margin: auto;
+        margin-top: 20px;
+        font-size: medium;
+      }
+
+      #title {
+        border-radius: 8px;
+        margin: auto;
+      }
+
+      #h3Style {
+        display: block;
+        /* font-size: large; */
+      }
+
+      #toEditBtn {
+        border-radius: 6px;
+        color: #085ed6;
+      }
+
+      #completedBtn {
+        border-radius: 6px;
+        color: #167347;
+      }
+
+      #deleteBtn {
+        border-radius: 6px;
+        color: #dc3444;
+      }
+
+      #saveBtn {
+        border-radius: 6px;
+        color: black;
+      }
+
+      footer {
+        width: 60%;
+        border-bottom-left-radius: 80px;
+        border-top-right-radius: 80px;
+        background-color: #222;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        margin: auto;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>To Do List</h1>
+    <div id="container">
+      <input
+        type="text"
+        id="title"
+        class="mb-3"
+        onchange="addItem()"
+        placeholder="Add Activity"
+      />
+      <h3 id="h3Style">Nothing to do!</h3>
+      <ul id="list"></ul>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 Created by Aung Phyo Thu</p>
+    </footer>
+
+    <script>
+      function addItem() {
+        // const element = document.createElement("li");
+        const input = document.getElementById("title");
+        const textNode = input.value;
+        // const textNode = document.createTextNode(input.value);
+        // element.appendChild(textNode);
+
+        const ul = document.getElementById("list");
+        // ul.appendChild(element);
+        ul.appendChild(createItem(textNode));
+
+        input.value = "";
+        input.focus();
+
+        const h3Style = document.getElementById("h3Style");
+        h3Style.style.display = "none";
+      }
+
+      function createItem(ele) {
+        let element = document.createElement("li");
+        element.style.marginBottom = "10px";
+
+        element.innerHTML = ele;
+        element.innerHTML +=
+          "<input type=button onclick='toEdit(event.target);' value='Edit' id='toEditBtn'>";
+        element.innerHTML +=
+          "<input type=button class=mx-2 onclick='completed(event.target);' value='Complete' id='completedBtn'>";
+        element.innerHTML +=
+          "<input onclick='deleted(event.target);' type=button value='Delete' id='deleteBtn'>";
+
+        return element;
+      }
+
+      function toEdit(element) {
+        const listItem = element.parentElement;
+        const currentText = listItem.firstChild.textContent;
+
+        // Create an input field with the current title text
+        const inputField = document.createElement("input");
+        inputField.type = "text";
+        inputField.value = currentText;
+
+        // Create a "Save" button
+        // const saveButton = document.createElement("input");
+        // saveButton.type = "button";
+        // saveButton.value = "Save";
+        // saveButton.onclick = function () {
+        //   saveEdit(this);
+        // };
+
+        // Clear the current content of the list item
+        listItem.innerHTML = "";
+
+        // Append the input field and "Save" button to the list item
+        listItem.appendChild(inputField);
+        listItem.innerHTML +=
+          "<input type=button onclick='saveEdit(event.target);' value='Save' id='saveBtn'>";
+      }
+
+      function saveEdit(button) {
+        const listItem = button.parentElement;
+        const inputField = listItem.querySelector("input[type='text']");
+        const updatedText = inputField.value;
+
+        // Clear the current content of the list item
+        listItem.innerHTML = updatedText;
+
+        // Append the original action buttons
+        listItem.innerHTML +=
+          "<input type=button onclick='toEdit(this);' value='Edit' id='toEditBtn'>";
+        listItem.innerHTML +=
+          "<input type=button class=mx-2  onclick='completed(this);' value='Complete' id='completedBtn'>";
+        listItem.innerHTML +=
+          "<input onclick='deleted(this);' type=button value='Delete' id='deleteBtn'>";
+      }
+
+      function completed(element) {
+        element.parentElement.style.textDecoration = "line-through";
+        element.parentElement.style.fontStyle = "italic";
+        element.parentElement.style.color = "green";
+        element.disabled = "disabled";
+        const toEditBtn = getElementById("toEditBtn");
+        element.parentElement.button.disabled = "disabled";
+      }
+
+      function deleted(element) {
+        // console.log(document.getElementById("list").childElementCount);
+
+        if (document.getElementById("list").childElementCount == 1) {
+          h3Style.style.display = "block";
+        }
+
+        // console.log(element);
+        element.parentElement.parentElement.removeChild(element.parentElement);
+      }
+    </script>
+
+    <!-- For Bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
