@@ -80,6 +80,7 @@
     </style>
   </head>
   <body>
+    <a href="index.html">Home</a>
     <h1>To Do List</h1>
     <div id="container">
       <input
@@ -175,12 +176,17 @@
       }
 
       function completed(element) {
+        console.log(element.parentElement);
+
         element.parentElement.style.textDecoration = "line-through";
+
         element.parentElement.style.fontStyle = "italic";
         element.parentElement.style.color = "green";
         element.disabled = "disabled";
-        const toEditBtn = getElementById("toEditBtn");
-        element.parentElement.button.disabled = "disabled";
+        const toEditBtn = document.getElementById("toEditBtn");
+        console.log(toEditBtn);
+
+        toEditBtn.disabled = "disabled";
       }
 
       function deleted(element) {

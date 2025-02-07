@@ -30,8 +30,47 @@
       href="https://fonts.googleapis.com/css2?family=Eczar:wght@400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
       rel="stylesheet"
     />
+    <style>
+      #container {
+        border: 10px solid lightseagreen;
+        border-radius: 30px;
+      }
+
+      form {
+        font-family: "Nunito Sans", serif;
+        font-optical-sizing: auto;
+        font-size: large;
+      }
+
+      input,
+      button {
+        border: 3px solid lightgrey;
+        border-radius: 10px;
+      }
+
+      select {
+        border: 3px double lightcoral;
+        border-radius: 10px;
+      }
+
+      img {
+        width: 15%;
+      }
+
+      h1 {
+        font-family: "Eczar", serif;
+        font-optical-sizing: auto;
+        font-size: larger;
+      }
+
+      p {
+        font-family: "Inter", serif;
+        font-size: x-small;
+      }
+    </style>
   </head>
   <body>
+    <a href="index.html">Home</a>
     <div id="container" class="mx-auto my-5 w-50 px-3 pt-4">
       <div class="row justify-content-between">
         <h1 class="col-sx-12 col-4">Calculator</h1>
@@ -63,7 +102,12 @@
         </div>
 
         <div class="mt-4 text-center">
-          <button type="button" class="btn btn-primary" id="btn">
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="calculateAns()"
+            id="btn"
+          >
             <i class="fa-solid fa-calculator"></i>
           </button>
           <button type="reset" class="btn btn-danger">
@@ -87,6 +131,39 @@
       crossorigin="anonymous"
     ></script>
 
-    <script src="script.js"></script>
+    <script>
+      function calculateAns() {
+        const num1 = Number(document.getElementById("num1").value);
+        const num2 = Number(document.getElementById("num2").value);
+        let ans = 0;
+
+        let optr = document.getElementById("optr").value;
+        console.log(optr, typeof optr);
+
+        switch (optr) {
+          case "+":
+            ans = num1 + num2;
+            break;
+          case "-":
+            ans = num1 - num2;
+            break;
+          case "*":
+            ans = num1 * num2;
+            break;
+          case "/":
+            ans = num1 / num2;
+            break;
+        }
+        console.log(num1, typeof num1);
+        console.log(num2, typeof num2);
+        console.log(ans, typeof ans);
+        document.getElementById("result").value = ans;
+      }
+
+      const btn = document.getElementById("btn");
+      btn.addEventListener("click", () => {
+        calculateAns();
+      });
+    </script>
   </body>
 </html>
